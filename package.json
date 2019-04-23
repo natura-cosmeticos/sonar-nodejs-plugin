@@ -35,6 +35,7 @@
         "cli-table2": "0.2.0",
         "colors": "1.1.2",
         "fs-extra": "2.1.0",
+        "prettier": "^1.17.0",
         "request": "^2.88.0",
         "request-promise": "^4.2.4",
         "sync-exec": "0.6.2",
@@ -44,7 +45,7 @@
         "ava": "0.16.0",
         "babel-cli": "^6.18.0",
         "babel-preset-env": "^1.4.0",
-        "husky": "0.13.3",
+        "husky": "^0.13.3",
         "lint-staged": "3.4.0"
     },
     "babel": {
