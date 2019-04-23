@@ -1,10 +1,11 @@
+const request = require('request')
 const fs = require('fs-extra')
 const syncExec = require('sync-exec')
 const Table = require('cli-table2')
 const { yellow } = require('colors')
 const argv = require('yargs-parser')(process.argv.slice(2))
 const path = require('path')
-const config = require('../config/options')
+const config = require('../config/const')
 var rp = require('request-promise')
 
 /*
@@ -16,6 +17,7 @@ var rp = require('request-promise')
 let productionModifier = '--production'
 let projectName = ''
 let tableJSON = ''
+let totalDependencies = 0
 
 let setup = includeDev => {
   console.log()
@@ -233,24 +235,15 @@ let displayResults = (flatDependencies, allDependencies, totalSize) => {
   console.log(table.toString())
   console.log()
   tableJSON = JSON.stringify(sortedDependencies)
+  totalDependencies = sortedDependencies.length
 }
 
 const rest = () => {
-  //Obtem Informações do Projeto
   var service = ''
   var url = ''
+  var exists = false
 
-  //Testa se a metrica ja existe
-  // service = '/api/metrics/search';
-  // url = 'https://' + config.token + ':' + config.password + '@' + config.host + service;
-  // rp(url)
-  //     .then(function (json) {
-  //         let metrics = json;
-  //         console.log(metrics);
-  //     });
-
-  //Create a metric
-  service = '/api/metrics/create'
+  service = '/api/metrics/search'
   url =
     'https://' +
     config.token +
@@ -259,27 +252,126 @@ const rest = () => {
     '@' +
     config.host +
     service
-  var options = {
-    method: 'POST',
-    uri: url,
-    body: {
-      description: 'Teste',
-      domain: 'Dependencies Check',
-      key: 'dependencies_check',
-      name: 'Total',
-      type: 'INT',
-    },
-    json: true,
-  }
+  rp(url).then(function(json) {
+    var dTableMetrics = JSON.parse(json)
+    for (var i = 0; i < dTableMetrics.metrics.length; i++) {
+      if (dTableMetrics.metrics[i].key === 'dependencies_check') {
+        exists = true
+      }
+    }
 
-  rp(options)
-    .then(function(json) {
-      let metrics = json
-      console.log(metrics)
-    })
-    .catch(function(err) {
-      console.log(err)
-    })
+    if (!exists) {
+      service = '/api/metrics/create'
+      url =
+        'https://' +
+        config.token +
+        ':' +
+        config.password +
+        '@' +
+        config.host +
+        service
+      var options = {
+        method: 'POST',
+        uri: url,
+        formData: {
+          description: 'Total de Dependências',
+          domain: 'Dependencies Check',
+          key: 'dependencies_check',
+          name: 'Total',
+          type: 'INT',
+        },
+        json: true,
+      }
+
+      rp(options)
+        .then(function(json) {
+          let metrics = json
+          console.log(metrics)
+        })
+        .catch(function(err) {
+          console.log(err)
+        })
+    }
+  })
+
+  //Testa se a custom_measures ja existe para esse projeto
+  service = '/api/custom_measures/search?projectKey=architecture-node-base'
+  url =
+    'https://' +
+    config.token +
+    ':' +
+    config.password +
+    '@' +
+    config.host +
+    service
+  rp(url).then(function(json) {
+    var dtableJSON = JSON.parse(json)
+    if (
+      dtableJSON.customMeasures.length == 0 ||
+      dtableJSON.customMeasures[0].metric.key != 'dependencies_check'
+    ) {
+      //Cria a custom_measures
+      service = '/api/custom_measures/create'
+      url =
+        'https://' +
+        config.token +
+        ':' +
+        config.password +
+        '@' +
+        config.host +
+        service
+      var options = {
+        method: 'POST',
+        uri: url,
+        formData: {
+          projectKey: 'architecture-node-base',
+          metricKey: 'dependencies_check',
+          value: totalDependencies,
+          description: 'Total',
+        },
+        json: true,
+      }
+
+      rp(options)
+        .then(function(json) {
+          let metrics = json
+          console.log(metrics)
+        })
+        .catch(function(err) {
+          console.log(err)
+        })
+    } else {
+      //Atualiza custom_measures
+      var id = dtableJSON.customMeasures[0].id
+      service = '/api/custom_measures/update'
+      url =
+        'https://' +
+        config.token +
+        ':' +
+        config.password +
+        '@' +
+        config.host +
+        service
+      var options = {
+        method: 'POST',
+        uri: url,
+        formData: {
+          id: id,
+          value: totalDependencies,
+        },
+        json: true,
+      }
+
+      rp(options)
+        .then(function(json) {
+          let metrics = json
+          console.log('finish!')
+        })
+        .catch(function(err) {
+          console.log(err)
+        })
+    }
+  })
 }
 
 /* Return to original state */
