@@ -1,0 +1,71 @@
+{
+    "name": "node-dependencies-check",
+    "version": "1.0.0",
+    "description": "dependencies check and post in SonarQube",
+    "author": "david.pontes@vizir.com.br",
+    "main": "src/index.js",
+    "bin": {
+        "node-dependencies-check": "dist/index.js"
+    },
+    "scripts": {
+        "build": "babel src -d dist",
+        "build-test": "babel test/src -d test/dist",
+        "test": "npm run build && npm run build-test && npm run ava",
+        "ava": "ava test/dist/*.js -s --no-cache",
+        "precommit": "lint-staged"
+    },
+    "files": [
+        "dist"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://davidvizir@bitbucket.org/myvizir/node-dependencies-check.git"
+    },
+    "engines": {
+        "node": ">= 5.0.0",
+        "npm": ">= 3.0.0"
+    },
+    "keywords": [
+        "dependencies",
+        "check",
+        "sonarqube"
+    ],
+    "dependencies": {
+        "ansi-regex": "2.0.0",
+        "cli-table2": "0.2.0",
+        "colors": "1.1.2",
+        "fs-extra": "2.1.0",
+        "request": "^2.88.0",
+        "request-promise": "^4.2.4",
+        "sync-exec": "0.6.2",
+        "yargs-parser": "4.0.2"
+    },
+    "devDependencies": {
+        "ava": "0.16.0",
+        "babel-cli": "^6.18.0",
+        "babel-preset-env": "^1.4.0",
+        "husky": "0.13.3",
+        "lint-staged": "3.4.0"
+    },
+    "babel": {
+        "presets": [
+            [
+                "env",
+                {
+                    "targets": {
+                        "node": 4
+                    }
+                }
+            ]
+        ]
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write --single-quote --no-semi --trailing-comma es5",
+            "git add"
+        ]
+    },
+    "directories": {
+        "test": "test"
+    }
+}
