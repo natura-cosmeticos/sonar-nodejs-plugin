@@ -66,8 +66,8 @@ allDependencies.forEach(dep => {
 /* Display results */
 helpers.displayResults(flatDependencies, allDependencies, totalSize)
 
-/* REST */
-helpers.rest()
+/* SONAR QUBE */
+helpers.sonar()
 
 /* Return to original state */
 helpers.teardown()
