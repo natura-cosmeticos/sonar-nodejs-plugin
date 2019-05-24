@@ -1,0 +1,406 @@
+{
+  "actions": [
+    {
+      "action": "install",
+      "module": "nyc",
+      "target": "14.1.1",
+      "isMajor": true,
+      "resolves": [
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-generator>babel-types>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-generator>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-template>babel-traverse>babel-types>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-template>babel-traverse>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-template>babel-types>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-template>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-traverse>babel-types>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-traverse>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 782,
+          "path": "nyc>istanbul-lib-instrument>babel-types>lodash",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        },
+        {
+          "id": 755,
+          "path": "nyc>istanbul-reports>handlebars",
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "lodash",
+      "resolves": [
+        {
+          "id": 782,
+          "path": "cli-table2>lodash",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 782,
+          "path": "cost-of-modules>cli-table2>lodash",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 577,
+          "path": "cli-table2>lodash",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 577,
+          "path": "cost-of-modules>cli-table2>lodash",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "sync-exec",
+      "resolves": [
+        {
+          "id": 310,
+          "path": "cost-of-modules>sync-exec",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 310,
+          "path": "sync-exec",
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    },
+    {
+      "action": "review",
+      "module": "marked",
+      "resolves": [
+        {
+          "id": 812,
+          "path": "esdoc>marked",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "id": 812,
+          "path": "esdoc-standard-plugin>esdoc-publish-html-plugin>marked",
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ]
+    }
+  ],
+  "advisories": {
+    "310": {
+      "findings": [
+        {
+          "version": "0.6.2",
+          "paths": [
+            "cost-of-modules>sync-exec",
+            "sync-exec"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 310,
+      "created": "2017-02-02T23:03:58.000Z",
+      "updated": "2018-03-21T19:59:58.737Z",
+      "deleted": null,
+      "title": "Tmp files readable by other users",
+      "found_by": {
+        "name": "maxnikulin"
+      },
+      "reported_by": {
+        "name": "maxnikulin"
+      },
+      "module_name": "sync-exec",
+      "cves": [
+        "CVE-2017-16024"
+      ],
+      "vulnerable_versions": "<=99.999.99999",
+      "patched_versions": "<0.0.0",
+      "overview": "Affected versions of `sync-exec` use files located in `/tmp/` to buffer command results before returning values. As `/tmp/` is almost always set with world readable permissions, this may allow low privilege users on the system to read the results of commands run via `sync-exec` under a higher privilege user.",
+      "recommendation": "There is currently no direct patch for `sync-exec`, as the `child_process.execSync` function provided in Node.js v0.12.0 and later provides the same functionality natively. \n\nThe best mitigation currently is to update to Node.js v0.12.0 or later, and migrate all uses of `sync-exec` to `child_process.execSync()`.\n",
+      "references": "[Issue #17](https://github.com/gvarsanyi/sync-exec/issues/17)\n[Mitre - CWE #377](https://cwe.mitre.org/data/definitions/377.html)",
+      "access": "public",
+      "severity": "moderate",
+      "cwe": "CWE-377",
+      "metadata": {
+        "module_type": "Multi.Library",
+        "exploitability": 4,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/310"
+    },
+    "577": {
+      "findings": [
+        {
+          "version": "3.10.1",
+          "paths": [
+            "cli-table2>lodash",
+            "cost-of-modules>cli-table2>lodash"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 577,
+      "created": "2018-04-24T14:27:02.796Z",
+      "updated": "2018-04-24T14:27:13.049Z",
+      "deleted": null,
+      "title": "Prototype Pollution",
+      "found_by": {
+        "name": "Olivier Arteau (HoLyVieR)"
+      },
+      "reported_by": {
+        "name": "Olivier Arteau (HoLyVieR)"
+      },
+      "module_name": "lodash",
+      "cves": [
+        "CVE-2018-3721"
+      ],
+      "vulnerable_versions": "<4.17.5",
+      "patched_versions": ">=4.17.5",
+      "overview": "Versions of `lodash` before 4.17.5 are vulnerable to prototype pollution. \n\nThe vulnerable functions are 'defaultsDeep', 'merge', and 'mergeWith' which allow a malicious user to modify the prototype of `Object` via `__proto__` causing the addition or modification of an existing property that will exist on all objects.\n\n",
+      "recommendation": "Update to version 4.17.5 or later.",
+      "references": "- [HackerOne Report](https://hackerone.com/reports/310443)",
+      "access": "public",
+      "severity": "low",
+      "cwe": "CWE-471",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 1,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/577"
+    },
+    "755": {
+      "findings": [
+        {
+          "version": "4.0.11",
+          "paths": [
+            "nyc>istanbul-reports>handlebars"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        }
+      ],
+      "id": 755,
+      "created": "2018-12-28T20:34:57.708Z",
+      "updated": "2019-04-15T20:54:25.416Z",
+      "deleted": null,
+      "title": "Prototype Pollution",
+      "found_by": {
+        "link": "",
+        "name": "Mahmoud Gamal, Matías Lang"
+      },
+      "reported_by": {
+        "link": "",
+        "name": "Mahmoud Gamal, Matías Lang"
+      },
+      "module_name": "handlebars",
+      "cves": [],
+      "vulnerable_versions": "<=4.0.13 || >=4.1.0 <4.1.2",
+      "patched_versions": ">=4.0.14 <4.1.0 || >=4.1.2",
+      "overview": "Versions of `handlebars` prior to 4.0.14 are vulnerable to Prototype Pollution. Templates may alter an Objects' prototype, thus allowing an attacker to execute arbitrary code on the server.",
+      "recommendation": "For handlebars 4.1.x upgrade to 4.1.2 or later.\nFor handlebars 4.0.x upgrade to 4.0.14 or later.",
+      "references": "",
+      "access": "public",
+      "severity": "high",
+      "cwe": "CWE-471",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 6,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/755"
+    },
+    "782": {
+      "findings": [
+        {
+          "version": "3.10.1",
+          "paths": [
+            "cli-table2>lodash",
+            "cost-of-modules>cli-table2>lodash"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        },
+        {
+          "version": "4.17.10",
+          "paths": [
+            "nyc>istanbul-lib-instrument>babel-generator>babel-types>lodash",
+            "nyc>istanbul-lib-instrument>babel-generator>lodash",
+            "nyc>istanbul-lib-instrument>babel-template>babel-traverse>babel-types>lodash",
+            "nyc>istanbul-lib-instrument>babel-template>babel-traverse>lodash",
+            "nyc>istanbul-lib-instrument>babel-template>babel-types>lodash",
+            "nyc>istanbul-lib-instrument>babel-template>lodash",
+            "nyc>istanbul-lib-instrument>babel-traverse>babel-types>lodash",
+            "nyc>istanbul-lib-instrument>babel-traverse>lodash",
+            "nyc>istanbul-lib-instrument>babel-types>lodash"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": true
+        }
+      ],
+      "id": 782,
+      "created": "2019-02-13T16:16:53.770Z",
+      "updated": "2019-02-13T16:16:53.770Z",
+      "deleted": null,
+      "title": "Prototype Pollution",
+      "found_by": {
+        "link": "",
+        "name": "asgerf"
+      },
+      "reported_by": {
+        "link": "",
+        "name": "asgerf"
+      },
+      "module_name": "lodash",
+      "cves": [
+        "CVE-2018-16487"
+      ],
+      "vulnerable_versions": "<4.17.11",
+      "patched_versions": ">=4.17.11",
+      "overview": "Versions of `lodash` before 4.17.5 are vulnerable to prototype pollution. \n\nThe vulnerable functions are 'defaultsDeep', 'merge', and 'mergeWith' which allow a malicious user to modify the prototype of `Object` via `{constructor: {prototype: {...}}}` causing the addition or modification of an existing property that will exist on all objects.\n\n",
+      "recommendation": "Update to version 4.17.11 or later.",
+      "references": "- [HackerOne Report](https://hackerone.com/reports/380873)",
+      "access": "public",
+      "severity": "moderate",
+      "cwe": "CWE-471",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 3,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/782"
+    },
+    "812": {
+      "findings": [
+        {
+          "version": "0.3.19",
+          "paths": [
+            "esdoc>marked",
+            "esdoc-standard-plugin>esdoc-publish-html-plugin>marked"
+          ],
+          "dev": true,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 812,
+      "created": "2019-04-10T17:42:37.650Z",
+      "updated": "2019-04-10T17:42:37.650Z",
+      "deleted": null,
+      "title": "Regular Expression Denial of Service",
+      "found_by": {
+        "link": "",
+        "name": "Anders Kaseorg"
+      },
+      "reported_by": {
+        "link": "",
+        "name": "Anders Kaseorg"
+      },
+      "module_name": "marked",
+      "cves": [],
+      "vulnerable_versions": ">=0.3.14 <0.6.2",
+      "patched_versions": ">=0.6.2",
+      "overview": "Versions of `marked` prior to 0.6.2 and later than 0.3.14 are vulnerable to Regular Expression Denial of Service. Email addresses may be evaluated in quadratic time, allowing attackers to potentially crash the node process due to resource exhaustion.",
+      "recommendation": "Upgrade to version 0.6.2 or later.",
+      "references": "- [GitHub PR](https://github.com/markedjs/marked/pull/1460)\n- [Snyk Report](https://snyk.io/vuln/SNYK-JS-MARKED-174116)",
+      "access": "public",
+      "severity": "moderate",
+      "cwe": "CWE-400",
+      "metadata": {
+        "module_type": "",
+        "exploitability": 5,
+        "affected_components": ""
+      },
+      "url": "https://npmjs.com/advisories/812"
+    }
+  },
+  "muted": [],
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 2,
+      "moderate": 15,
+      "high": 1,
+      "critical": 0
+    },
+    "dependencies": 119,
+    "devDependencies": 3326,
+    "optionalDependencies": 218,
+    "totalDependencies": 3445
+  },
+  "runId": "e751caed-fada-4f8d-9a55-1615ca43dd21"
+}

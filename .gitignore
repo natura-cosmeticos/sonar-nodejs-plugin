@@ -62,3 +62,10 @@ typings/
 
 /.idea
 .scannerwork/
+
+# project docs
+
+docs
+
+# IDE file
+.vscode

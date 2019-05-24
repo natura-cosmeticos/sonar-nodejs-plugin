@@ -1,72 +1,75 @@
 {
-    "name": "node-dependencies-check",
-    "version": "1.0.0",
-    "description": "dependencies check and post in SonarQube",
-    "author": "david.pontes@vizir.com.br",
-    "main": "src/index.js",
-    "bin": {
-        "node-dependencies-check": "dist/index.js"
-    },
-    "scripts": {
-        "build": "babel src -d dist",
-        "build-test": "babel test/src -d test/dist",
-        "test": "npm run build && npm run build-test && npm run ava",
-        "ava": "ava test/dist/*.js -s --no-cache",
-        "precommit": "lint-staged"
-    },
-    "files": [
-        "dist"
+  "main": "index.js",
+  "name": "@naturacosmeticos/sonar-nodejs-plugin",
+  "author": "Natura Cosméticos <TDDAArquitetura@natura.net>",
+  "version": "1.2.10",
+  "devDependencies": {
+    "@naturacosmeticos/eslint-config-natura": "^1.0.0",
+    "esdoc": "^1.1.0",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
+    "esdoc-node": "^1.0.3",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^5.3.0",
+    "eslint-plugin-import": "^2.13.0",
+    "faker": "^4.1.0",
+    "husky": "^1.0.0-rc.13",
+    "mocha": "^5.2.0",
+    "nyc": "^11.9.0",
+    "sinon": "^7.1.1"
+  },
+  "bin": {
+    "sonar-nodejs": "./index.js"
+  },
+  "files": [
+    "/src",
+    "index.js"
+  ],
+  "scripts": {
+    "docs": "./node_modules/.bin/esdoc -c .esdoc.json",
+    "lint": "eslint src/ test/",
+    "lint:fix": "eslint --fix src/ test/",
+    "test": "mocha --recursive",
+    "test:watch": "mocha --recursive --watch",
+    "test:coverage": "nyc mocha --recursive",
+    "package": "bash package.sh"
+  },
+  "nyc": {
+    "all": true,
+    "check-coverage": true,
+    "per-file": true,
+    "include": [
+      "src/**/*.js"
     ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://davidvizir@bitbucket.org/myvizir/node-dependencies-check.git"
-    },
-    "engines": {
-        "node": ">= 5.0.0",
-        "npm": ">= 3.0.0"
-    },
-    "keywords": [
-        "dependencies",
-        "check",
-        "sonarqube"
+    "exclude": [
+      "test/**/*.js"
     ],
-    "dependencies": {
-        "ansi-regex": "2.0.0",
-        "cli-table2": "0.2.0",
-        "colors": "1.1.2",
-        "fs-extra": "2.1.0",
-        "prettier": "^1.17.0",
-        "request": "^2.88.0",
-        "request-promise": "^4.2.4",
-        "sync-exec": "0.6.2",
-        "yargs-parser": "4.0.2"
-    },
-    "devDependencies": {
-        "ava": "0.16.0",
-        "babel-cli": "^6.18.0",
-        "babel-preset-env": "^1.4.0",
-        "husky": "^0.13.3",
-        "lint-staged": "3.4.0"
-    },
-    "babel": {
-        "presets": [
-            [
-                "env",
-                {
-                    "targets": {
-                        "node": 4
-                    }
-                }
-            ]
-        ]
-    },
-    "lint-staged": {
-        "*.js": [
-            "prettier --write --single-quote --no-semi --trailing-comma es5",
-            "git add"
-        ]
-    },
-    "directories": {
-        "test": "test"
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "report-dir": "./coverage"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
     }
+  },
+  "dependencies": {
+    "commander": "^2.20.0",
+    "cost-of-modules": "^1.0.1"
+  },
+  "contributors": [
+    "Bruno Cartolari <cartola@vizir.com.br>",
+    "Daniel Arthaud <daniel@vizir.com.br>",
+    "Diego Prates <diego.prates@vizir.com.br>",
+    "Fabrício Campos <fabricio@vizir.com.br>"
+  ],
+  "homepage": "https://github.com/natura-cosmeticos/sonar-nodejs-plugin#readme",
+  "bugs": "https://github.com/natura-cosmeticos/sonar-nodejs-plugin/issues",
+  "keywords": [
+    "sonar",
+    "nodejs"
+  ],
+  "license": "MIT"
 }
