@@ -8,11 +8,11 @@ const checkAll = async (metric, argv) => {
   const alreadyCreated = await metricsSender.search();
   const alreadyCreatedCustom = await customMeasuresService.search();
 
-  console.log('####### alreadyCreated');
-  console.log(alreadyCreated);
+  // console.log('####### alreadyCreated');
+  // console.log(alreadyCreated);
 
-  console.log('####### alreadyCreatedCustom');
-  console.log(alreadyCreatedCustom);
+  // console.log('####### alreadyCreatedCustom');
+  // console.log(alreadyCreatedCustom);
 
   // const create = await metricsSender.create({
   //   description: 'Total de Dependências',
