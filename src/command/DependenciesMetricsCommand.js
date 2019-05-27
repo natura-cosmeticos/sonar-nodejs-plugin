@@ -7,9 +7,9 @@ const {
   displayResults,
   teardown,
 } = require('cost-of-modules/lib/helpers');
-// const metricsSender = require('./../MetricsSender');
+const metricsSender = require('../MetricsSender');
 
-const dependenciesMetrics = argv => {
+const dependenciesMetrics = async (metric, argv) => {
   setup();
 
   const moduleSizes = getSizeForNodeModules();
@@ -38,7 +38,9 @@ const dependenciesMetrics = argv => {
 
   displayResults(flatDependencies, allDependencies, totalSize);
 
-  // metricsSender(flatDependencies.length);
+  const totalDependencies = flatDependencies.length;
+
+  const eita = await metricsSender(metric, argv);
 
   teardown();
 }

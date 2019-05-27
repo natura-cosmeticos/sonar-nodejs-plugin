@@ -27,3 +27,21 @@ This README would normally document whatever steps are necessary to get your app
 
 * Repo owner or admin
 * Other community or team contact
+
+### Example
+
+```
+sonar-nodejs \
+  --host 'sonar.vzr.com.br' \
+  --password 'senha' \
+  --token '6eda626bbedb22e224bd1bb17e7d4edb9c1e9180' \
+  --projectKey 'architecture-node-base' \
+  --metrics 'dependencies_check,audit'
+  
+./index.js \
+  --host 'sonar.vzr.com.br' \
+  --password 'senha' \
+  --token '6eda626bbedb22e224bd1bb17e7d4edb9c1e9180' \
+  --projectKey 'architecture-node-base' \
+  --metrics 'dependencies_check,audit'
+```

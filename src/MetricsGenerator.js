@@ -1,13 +1,18 @@
-const dependenciesMetrics = require('./command/DependenciesMetrics');
+const dependenciesMetrics = require('./command/DependenciesMetricsCommand');
+
+const mapMetricToCommand = {
+  dependencies_check: dependenciesMetrics,
+};
 
 const metricsGenerator = argv => {
-  const { metric } = argv;
+  const { metrics } = argv;
+  const metricsList = metrics.split(',');
 
-  switch(metric) {
-    case 'dependencies_check':
-      dependenciesMetrics(argv);
-    break;
-  }
+  metricsList.map(metric => {
+    const command = mapMetricToCommand[metric];
+
+    if (command) command(metric, argv);
+  });
 }
 
 module.exports = metricsGenerator;
