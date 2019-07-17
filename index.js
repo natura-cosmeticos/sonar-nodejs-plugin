@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 const cli = require('commander');
 const generateMetrics = require('./src/MetricsGenerator');
+const { 
+  command: dependenciesMetricsCommand,
+  key: dependenciesMetricsKey 
+} = require('./src/command/DependenciesMetricsCommand');
+
+const mapMetricToCommand = {
+  [dependenciesMetricsKey]: dependenciesMetricsCommand,
+};
 
 cli
   .version('0.0.1')
@@ -12,4 +20,4 @@ cli
   .option('-M, --metrics [metric]', 'determine which kind of metrics to generate, comma separated list', 'dependencies_check')
   .parse(process.argv);
 
-generateMetrics(cli);
+generateMetrics(cli, mapMetricToCommand);

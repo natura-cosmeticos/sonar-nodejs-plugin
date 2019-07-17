@@ -1,69 +1,68 @@
-const {
-  setup,
-  getSizeForNodeModules,
-  getRootDependencies,
-  attachNestedDependencies,
-  getAllDependencies,
-  displayResults,
-  teardown,
-} = require('cost-of-modules/lib/helpers');
-const Listr = require('listr');
-const metricsSender = require('../MetricsSender');
+/* eslint-disable max-lines-per-function */
+const ora = require('ora');
+const SonarService = require('./../SonarService');
+const WrapExecution = require('./../WrapExecution');
+const PrettyPrintSteps = require('./../PrettyPrintSteps');
+const { costOfModules } = require('./../lib/CostOfModules');
 
-const costOfModules = context => {
-  setup();
+const key = 'dependencies_check';
 
-  // const moduleSizes = getSizeForNodeModules();
-  const rootDependencies = getRootDependencies();
-  let flatDependencies = attachNestedDependencies(rootDependencies);
+const metricSchema = {
+  description: 'Total de Dependências',
+  domain: 'Dependencies Check',
+  key,
+  name: 'Total',
+  type: 'INT',
+};
 
-  // for (let i = 0; i < flatDependencies.length; i++) {
-  //   let dep = flatDependencies[i]
+const customMeasureSchema = {
+  description: 'Total de dependencias instaladas no projeto',
+  metricId: '',
+  value: '',
+};
 
-  //   let sizeOfModule = moduleSizes[dep.name]
+const command = async ({
+  host,
+  password,
+  token,
+  projectKey,
+}, silent = false) => {
+  if (!silent) ora('Generating metrics...').start().info();
 
-  //   let sizeOfChildren = 0
-  //   dep.children.forEach(child => {
-  //     sizeOfChildren += moduleSizes[child] || 0
-  //   })
+  const sonarService = new SonarService({
+    host,
+    password,
+    projectKey,
+    token,
+  }, key);
 
-  //   dep.actualSize = sizeOfModule + sizeOfChildren
-  //   dep.numberOfChildren = dep.children.length
-  // }
+  const { totalDependencies } = await PrettyPrintSteps(
+    'Calculating number of dependencies',
+    () => WrapExecution(costOfModules),
+    silent,
+  );
 
-  // let allDependencies = getAllDependencies(flatDependencies);
+  const metric = await PrettyPrintSteps(
+    'Sending metric to sonar qube',
+    () => sonarService.upsertMetric(metricSchema),
+    silent,
+  );
 
-  // let totalSize = 0;
-  
-  // allDependencies.forEach(dep => { totalSize += moduleSizes[dep] || 0 });
+  const customMeasure = await PrettyPrintSteps(
+    'Sending custom measure to sonar qube',
+    () => sonarService.upsertCustomMeasure({
+      ...customMeasureSchema,
+      metricId: metric.id,
+      value: totalDependencies,
+    }),
+    silent,
+  );
 
-  // displayResults(flatDependencies, allDependencies, totalSize);
+  return {
+    command: totalDependencies,
+    customMeasure,
+    metric,
+  };
+};
 
-  // const totalDependencies = flatDependencies.length;
-
-  teardown();
-
-  context.totalDependencies = flatDependencies.length;
-
-  // return flatDependencies.length;
-}
-
-const dependenciesMetrics = async (metric, argv) => {
-  const tasks = new Listr([
-    {
-      title: 'Calculating size',
-      task: costOfModules
-    },
-    {
-      title: 'Sending metrics to sonar',
-      task: context => {
-        console.log('COST OF MODULES: ', context.totalDependencies);
-        metricsSender(metric, argv);
-      }
-    }
-  ]);
-
-  await tasks.run();
-}
-
-module.exports = dependenciesMetrics;
+module.exports = { command, key };

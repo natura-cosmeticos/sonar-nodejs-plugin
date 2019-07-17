@@ -1,18 +1,16 @@
-const dependenciesMetrics = require('./command/DependenciesMetricsCommand');
-
-const mapMetricToCommand = {
-  dependencies_check: dependenciesMetrics,
-};
-
-const metricsGenerator = argv => {
+const metricsGenerator = async (argv, mapper) => {
   const { metrics } = argv;
   const metricsList = metrics.split(',');
 
-  metricsList.map(metric => {
-    const command = mapMetricToCommand[metric];
+  const commands = metricsList.map((metric) => {
+    const command = mapper[metric];
 
-    if (command) command(metric, argv);
+    if (command) return command(argv);
   });
-}
+
+  const commandsList = await Promise.all(commands);
+
+  return commandsList;
+};
 
 module.exports = metricsGenerator;
