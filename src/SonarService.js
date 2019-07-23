@@ -6,18 +6,17 @@ module.exports = class SonarService {
     password,
     projectKey,
     token,
-  }, key) {
+  }) {
     this.token = token;
     this.password = password;
     this.host = host;
     this.projectKey = projectKey;
-    this.key = key;
   }
 
   buildPath(endpoint, path) {
     const { token, password, host } = this;
 
-    return `https://${token}:${password}@${host}/api/${endpoint}/${path}`;
+    return `http://${token}:${password}@${host}/api/${endpoint}/${path}`;
   }
 
   async search(endpoint, params = '') {
@@ -44,7 +43,7 @@ module.exports = class SonarService {
 
   async upsertMetric(payload) {
     const { metrics } = await this.search('metrics');
-    const metric = metrics.find(item => item.key === this.key);
+    const metric = metrics.find(item => item.key === payload.key);
 
     if (!metric) return this.upsert('metrics', 'create', payload);
 
@@ -56,7 +55,7 @@ module.exports = class SonarService {
 
   async upsertCustomMeasure(payload) {
     const { customMeasures } = await this.search('custom_measures', `?projectKey=${this.projectKey}`);
-    const customMeasure = customMeasures.find(item => item.metric.key === this.key);
+    const customMeasure = customMeasures.find(item => item.metric.key === payload.key);
 
     if (!customMeasure) {
       return this.upsert('custom_measures', 'create', {
@@ -66,7 +65,7 @@ module.exports = class SonarService {
     }
 
     return this.upsert('custom_measures', 'update', {
-      id: customMeasure.metric.id,
+      id: customMeasure.id,
       value: payload.value,
     });
   }

@@ -37,7 +37,7 @@ const costOfModules = () => {
   const totalDependencies = {
     totalChildrenDependencies: allDependencies.length - flatDependencies.length,
     totalDependencies: flatDependencies.length,
-    totalSize: `${(totalSize / 1024).toFixed(2)}M`,
+    totalSize: `${(totalSize / 1024).toFixed(2)}MB`,
   };
 
   return totalDependencies;

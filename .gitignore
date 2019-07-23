@@ -69,3 +69,5 @@ docs
 
 # IDE file
 .vscode
+
+sonar-project.properties
