@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 const cli = require('commander');
 const generateMetrics = require('./src/MetricsGenerator');
-const { 
+const {
   command: dependenciesMetricsCommand,
-  key: dependenciesMetricsKey 
+  key: dependenciesMetricsKey,
 } = require('./src/command/DependenciesMetricsCommand');
 
 const mapMetricToCommand = {

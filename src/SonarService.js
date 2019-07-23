@@ -19,6 +19,17 @@ module.exports = class SonarService {
     return `http://${token}:${password}@${host}/api/${endpoint}/${path}`;
   }
 
+  async validateCredentials() {
+    const url = this.buildPath('authentication', 'validate');
+    const response = await rp(url);
+
+    try {
+      return JSON.parse(response);
+    } catch (err) {
+      throw ('Could not parse sonar qube validate response: ', err);
+    }
+  }
+
   async search(endpoint, params = '') {
     const url = this.buildPath(endpoint, `search${params}`);
     const response = await rp(url);

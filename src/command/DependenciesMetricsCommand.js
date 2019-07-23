@@ -1,7 +1,5 @@
-/* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 const ora = require('ora');
-const SonarService = require('./../SonarService');
 const WrapExecution = require('./../WrapExecution');
 const PrettyPrintSteps = require('./../PrettyPrintSteps');
 const { costOfModules } = require('./../lib/CostOfModules');
@@ -41,20 +39,8 @@ const customMeasureSchema = {
   value: '',
 };
 
-const command = async ({
-  host,
-  password,
-  token,
-  projectKey,
-}, silent = false) => {
+const command = async (sonarService, silent = false) => {
   if (!silent) ora('Generating metrics...').start().info();
-
-  const sonarService = new SonarService({
-    host,
-    password,
-    projectKey,
-    token,
-  });
 
   const { totalDependencies, totalChildrenDependencies, totalSize } = await PrettyPrintSteps(
     'Calculating number of dependencies',
