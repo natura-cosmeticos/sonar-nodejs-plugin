@@ -31,7 +31,7 @@
         "sonarqube"
     ],
     "dependencies": {
-        "ansi-regex": "2.0.0",
+        "ansi-regex": "2.1.1",
         "cli-table2": "0.2.0",
         "colors": "1.1.2",
         "fs-extra": "2.1.0",
