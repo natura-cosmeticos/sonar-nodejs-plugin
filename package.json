@@ -43,9 +43,9 @@
     },
     "devDependencies": {
         "ava": "0.16.0",
-        "babel-cli": "^6.18.0",
-        "babel-preset-env": "^1.4.0",
-        "husky": "^0.13.3",
+        "babel-cli": "6.26.0",
+        "babel-preset-env": "1.7.0",
+        "husky": "0.13.3",
         "lint-staged": "3.4.0"
     },
     "babel": {
