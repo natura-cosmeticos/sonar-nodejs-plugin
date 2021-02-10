@@ -46,7 +46,7 @@
         "babel-cli": "^6.18.0",
         "babel-preset-env": "^1.4.0",
         "husky": "^0.13.3",
-        "lint-staged": "3.4.0"
+        "lint-staged": "10.5.4"
     },
     "babel": {
         "presets": [
